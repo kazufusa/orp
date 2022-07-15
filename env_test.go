@@ -11,19 +11,19 @@ import (
 func TestEnv(t *testing.T) {
 	given := "/a:/a/b/c:/a/b::/c:/d/e/f:/d/e:/d/e/f"
 	name := "TESTPATH"
+	sep := ":"
+	primary := "^/a/b"
+	secondary := "e"
+
 	err := os.Setenv(name, given)
 	if err != nil {
 		t.Errorf("Error should not be occured: %s", err)
 	}
-	e := NewEnv(name, ":")
-	e.MoveToTop("^/a/b")
-	e.MoveToTop("e")
-	expected := "/d/e/f:/d/e:/a/b/c:/a/b:/a:/c"
-	err = e.Export()
-	if err != nil {
-		t.Errorf("Error should not be occured: %s", err)
-	}
-	actual := os.Getenv("TESTPATH")
+	e := NewEnv(name, sep)
+	e.MoveToTop(primary)
+	e.MoveToTop(secondary)
+	expected := "TESTPATH=/d/e/f:/d/e:/a/b/c:/a/b:/a:/c"
+	actual := e.Export()
 	if diff := cmp.Diff(expected, actual); diff != "" {
 		t.Errorf("given(%s): expected %s, actual %s\n%s", given, expected, actual, diff)
 	}

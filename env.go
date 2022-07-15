@@ -1,6 +1,7 @@
 package orp
 
 import (
+	"fmt"
 	"os"
 	"regexp"
 	"strings"
@@ -16,8 +17,8 @@ func NewEnv(name, sep string) *Env {
 	return &Env{name: name, sep: sep, s: s, items: NewSet(strings.Split(s, sep))}
 }
 
-func (e *Env) Export() error {
-	return os.Setenv(e.name, strings.Join(e.items, e.sep))
+func (e *Env) Export() string {
+	return fmt.Sprintf("%s=%s", e.name, strings.Join(e.items, e.sep))
 }
 
 func (e *Env) MoveToTop(s string) error {
