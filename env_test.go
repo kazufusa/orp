@@ -22,7 +22,7 @@ func TestEnv(t *testing.T) {
 	e := NewEnv(name, sep)
 	e.MoveToTop(primary)
 	e.MoveToTop(secondary)
-	expected := "TESTPATH=/d/e/f:/d/e:/a/b/c:/a/b:/a:/c"
+	expected := "TESTPATH='/d/e/f':'/d/e':'/a/b/c':'/a/b':'/a':'/c'"
 	actual := e.Export()
 	if diff := cmp.Diff(expected, actual); diff != "" {
 		t.Errorf("given(%s): expected %s, actual %s\n%s", given, expected, actual, diff)

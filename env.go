@@ -18,7 +18,7 @@ func NewEnv(name, sep string) *Env {
 }
 
 func (e *Env) Export() string {
-	return fmt.Sprintf("%s=%s", e.name, strings.Join(e.items, e.sep))
+	return fmt.Sprintf("%s='%s'", e.name, strings.Join(e.items, "'"+e.sep+"'"))
 }
 
 func (e *Env) MoveToTop(s string) error {
