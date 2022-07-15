@@ -14,7 +14,7 @@ func main() {
 	}
 
 	env := orp.NewEnv("PATH", ":")
-	for i := len(os.Args) - 1; i >= 0; i-- {
+	for i := len(os.Args) - 1; i >= 1; i-- {
 		env.MoveToTop(os.Args[i])
 	}
 	fmt.Printf(env.Export())
